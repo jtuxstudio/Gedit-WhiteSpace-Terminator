@@ -1,14 +1,15 @@
 # coding: utf8
 # Copyright © 2011-2013 Kozea
 # Licensed under a 3-clause BSD license.
+#Update 2019-02-03 / jtuxstudio
 
 """
 Strip trailing whitespace before saving.
-
 """
-
-from gi.repository import GObject, Gedit
-
+import gi, re
+gi.require_version('Gtk', '3.0')
+gi.require_version('Gedit', '3.0')
+from gi.repository import GObject, Gtk, Gedit
 
 class WhiteSpaceTerminator(GObject.Object, Gedit.WindowActivatable):
     """Strip trailing whitespace before saving."""
@@ -26,8 +27,8 @@ class WhiteSpaceTerminator(GObject.Object, Gedit.WindowActivatable):
         handler = tab.get_document().connect("save", self.on_document_save)
         self.handlers.append((tab, handler))
 
-    def on_document_save(self, document, location, encoding, compression,
-                         flags, data=None):
+    """ Delete parameters: location, encoding, compression, flags, """
+    def on_document_save(self, document, data=None):
         for i, text in enumerate(document.props.text.rstrip().splitlines()):
             strip_stop = document.get_iter_at_line(i)
             strip_stop.forward_to_line_end()
