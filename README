@@ -6,3 +6,5 @@ the end of lines and empty lines at the end of the document.
 
 To install it, copy whitespaceterminator.plugin and whitespaceterminator.py
 into the ~/.local/share/gedit/plugins directory.
+
+For gedit 3.20+
